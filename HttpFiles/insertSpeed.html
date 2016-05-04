@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Data insertion</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+  <script type="text/javascript"> 
+  var dropdownVal = 0;
+  $(function(){
+
+    $(".dropdown-menu li a").click(function(){
+
+      $(".btn:first-child").text($(this).text());
+      $(".btn:first-child").val($(this).text());
+      dropdownVal = $(this).text();
+
+   });
+
+});
+
+  	var submitForm = function(){
+  		var latStart = document.getElementById('latStart').value,
+  			lngStart = document.getElementById('lngStart').value,
+  			latEnd = document.getElementById('latEnd').value,
+  			lngEnd = document.getElementById('lngEnd').value,
+  			comment = document.getElementById('comment').value,
+  			speed = dropdownVal;
+
+  		alert(latStart+lngStart+latEnd+lngEnd+comment+speed);
+
+  		var success = function(){
+  			alert('success!!');
+  		}
+
+  		$.ajax({
+		  type: "POST",
+		  url: "http://michaelkvistnielsen.dk/CLINES/RouteSpeed.php/addRouteSpeed",
+		  data: {
+		  	'latStart':latStart,
+  			'lngStart':lngStart,
+  			'latEnd':latEnd,
+  			'lngEnd':lngEnd,
+  			'desc':comment,
+  			'speed':speed
+  			},
+		  success: success
+		});
+  	}
+
+  </script>
+
+
+</head>
+<body>
+	<div class="container">
+	  <h2>Speed inserter</h2>
+	  <form role="form">
+	    <div class="form-group">
+	      <label for="latStart">Lat start:</label>
+	      <input type="number" class="form-control" id="latStart" placeholder="Enter latitude of start point">
+	    </div>
+
+	    <div class="form-group">
+	      <label for="lngStart">Lat start:</label>
+	      <input type="number" class="form-control" id="lngStart" placeholder="Enter longitude of start point">
+	    </div>
+	    <div class="form-group">
+	      <label for="latEnd">Lat end:</label>
+	      <input type="number" class="form-control" id="latEnd" placeholder="Enter latitude of end point">
+	    </div>
+	    <div class="form-group">
+	      <label for="lngEnd">Lng end:</label>
+	      <input type="number" class="form-control" id="lngEnd" placeholder="Enter longitude of end point">
+	    </div>
+
+
+	    <div class="form-group">
+	      <label for="comment">Comment:</label>
+	      <input type="text" class="form-control" id="comment" placeholder="Enter comment of route (optional)">
+	    </div>
+	    <div class="form-group">
+	      <label for="speed">Speed:</label>
+	      <div class="dropdown">
+			  <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" id="speedDropdown">Select speed
+			  <span class="caret"></span></button>
+			  <ul class="dropdown-menu">
+			    <li><a href="#">1 <div style="background-color:Green; width: 15px; height: 15px; display: inline-block; margin-left: 24px;"></div></a> </li>
+
+			    <li><a href="#">5 <div style="background-color:Blue; width: 15px; height: 15px; display: inline-block; margin-left: 24px;"></div></a></li>
+
+			    <li><a href="#">10 <div style="background-color:Yellow; width: 15px; height: 15px; display: inline-block; margin-left: 24px;"></div></a></li>
+
+			    <li><a href="#">15 <div style="background-color:Red; width: 15px; height: 15px; display: inline-block; margin-left: 24px;"></div></a></li>
+
+			    <li><a href="#">20 <div style="background-color:Black; width: 15px; height: 15px; display: inline-block; margin-left: 24px;"></div></a></li>
+			  </ul>
+			</div>
+	    </div>
+	    <button type="submit" onclick="submitForm()" class="btn btn-default">Submit</button>
+	  </form>
+	</div>
+
+	
+</body>
+</html>
